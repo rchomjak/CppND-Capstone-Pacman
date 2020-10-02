@@ -1,15 +1,15 @@
 #include "controller.h"
 #include <iostream>
 #include "SDL.h"
-#include "snake.h"
+#include "ghost.h"
 
-void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
-                                 Snake::Direction opposite) const {
-  if (snake.direction != opposite || snake.size == 1) snake.direction = input;
+void Controller::ChangeDirection(GhostAbstract &ghost, GhostAbstract::Direction input,
+                                 GhostAbstract::Direction opposite) const {
+  if (ghost.direction != opposite ) ghost.direction = input;
   return;
 }
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(bool &running, GhostAbstract &ghost) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
@@ -17,23 +17,23 @@ void Controller::HandleInput(bool &running, Snake &snake) const {
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
         case SDLK_UP:
-          ChangeDirection(snake, Snake::Direction::kUp,
-                          Snake::Direction::kDown);
+          ChangeDirection(ghost, GhostAbstract::Direction::kUp,
+                          GhostAbstract::Direction::kDown);
           break;
 
         case SDLK_DOWN:
-          ChangeDirection(snake, Snake::Direction::kDown,
-                          Snake::Direction::kUp);
+          ChangeDirection(ghost, GhostAbstract::Direction::kDown,
+                          GhostAbstract::Direction::kUp);
           break;
 
         case SDLK_LEFT:
-          ChangeDirection(snake, Snake::Direction::kLeft,
-                          Snake::Direction::kRight);
+          ChangeDirection(ghost, GhostAbstract::Direction::kLeft,
+                          GhostAbstract::Direction::kRight);
           break;
 
         case SDLK_RIGHT:
-          ChangeDirection(snake, Snake::Direction::kRight,
-                          Snake::Direction::kLeft);
+          ChangeDirection(ghost, GhostAbstract::Direction::kRight,
+                          GhostAbstract::Direction::kLeft);
           break;
       }
     }
