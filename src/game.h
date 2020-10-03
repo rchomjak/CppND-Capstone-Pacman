@@ -2,10 +2,13 @@
 #define GAME_H
 
 #include <random>
+#include <memory>
 #include "SDL.h"
 #include "controller.h"
 #include "renderer.h"
 #include "ghost.h"
+
+const int NO_COMPUTER_GHOSTS = 4;
 
 class Game {
  public:
@@ -16,8 +19,9 @@ class Game {
   int GetSize() const;
 
  private:
-  ComputerGhost ghost;
-  SDL_Point food;
+  
+  std::vector<std::unique_ptr<GhostAbstract>> ghosts;
+
 
   std::random_device dev;
   std::mt19937 engine;

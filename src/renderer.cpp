@@ -1,6 +1,9 @@
 #include "renderer.h"
 #include <iostream>
 #include <string>
+#include <memory>
+#include <vector>
+
 #include "ghost.h"
 
 Renderer::Renderer(const std::size_t screen_width,
@@ -39,10 +42,8 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(ComputerGhost const ghost, SDL_Point const &food) {
-  SDL_Rect block;
-  block.w = screen_width / grid_width;
-  block.h = screen_height / grid_height;
+void Renderer::Render(std::vector<std::unique_ptr<GhostAbstract>> &ghosts) {
+ 
 
   // Clear screen
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
@@ -57,7 +58,7 @@ void Renderer::Render(ComputerGhost const ghost, SDL_Point const &food) {
 
   */
   // Render snake's body
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+  //SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   /*
   for (SDL_Point const &point : ghost.body) {
     block.x = point.x * block.w;
@@ -65,6 +66,19 @@ void Renderer::Render(ComputerGhost const ghost, SDL_Point const &food) {
     SDL_RenderFillRect(sdl_renderer, &block);
   }
   */
+
+
+for (auto &ghost: ghosts) {
+
+  if (ghost->playable()) {  
+    Renderer::RenderPlayableGhost(static_cast<PlayableGhost *>(ghost.get()));
+
+  } else {
+    Renderer::RenderComputerGhost(static_cast<ComputerGhost *>(ghost.get()));
+  }
+
+}
+ /*
 
   // Render snake's head
   block.x = static_cast<int>(ghost.m_pos_x) * block.w;
@@ -75,12 +89,44 @@ void Renderer::Render(ComputerGhost const ghost, SDL_Point const &food) {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
   SDL_RenderFillRect(sdl_renderer, &block);
+*/
+
 
   // Update Screen
+  
   SDL_RenderPresent(sdl_renderer);
+
+  
 }
 
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
+
+void Renderer::RenderPlayableGhost(PlayableGhost *ghost) {
+
+  SDL_Rect block;
+  block.w = screen_width / grid_width;
+  block.h = screen_height / grid_height;
+
+  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
+  block.x = ghost->m_pos_x * block.w;
+  block.y = ghost->m_pos_y * block.h;
+  SDL_RenderFillRect(sdl_renderer, &block);
+
+}
+
+void Renderer::RenderComputerGhost(ComputerGhost *ghost) {
+
+  SDL_Rect block;
+  block.w = screen_width / grid_width ;
+  block.h = screen_height / grid_height ;
+
+  SDL_SetRenderDrawColor(sdl_renderer, 0xAA, 0xBB, 0xCC, 0xFF);
+  block.x = ghost->m_pos_x * block.w + ghost->id + 10;
+  block.y = ghost->m_pos_y * block.h + ghost->id + 10; 
+  SDL_RenderFillRect(sdl_renderer, &block);
+;
+}
+

@@ -2,6 +2,8 @@
 #define RENDERER_H
 
 #include <vector>
+#include <memory>
+
 #include "SDL.h"
 #include "ghost.h"
 
@@ -11,7 +13,10 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(ComputerGhost const ghost, SDL_Point const &food);
+  void Render(std::vector<std::unique_ptr<GhostAbstract>> &ghosts);
+  void RenderPlayableGhost(PlayableGhost *ghost);
+  void RenderComputerGhost(ComputerGhost *ghost);
+
   void UpdateWindowTitle(int score, int fps);
 
  private:

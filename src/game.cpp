@@ -3,11 +3,17 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : ghost(grid_width, grid_height),
+    : 
       engine(dev()),
       random_w(0, static_cast<int>(grid_width)),
       random_h(0, static_cast<int>(grid_height)) {
   //PlaceFood();
+  for (size_t i = 0; i < NO_COMPUTER_GHOSTS; i++) {
+    ghosts.emplace_back(new ComputerGhost(grid_width, grid_height));
+  }
+
+  ghosts.emplace_back(new PlayableGhost(grid_width, grid_height));
+
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -23,9 +29,15 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, ghost);
+
+    for (auto &ghost: ghosts) {
+      if (ghost->playable()) {
+       controller.HandleInput(running, ghost.get());
+      } 
+    }
+    
     //Update();
-    renderer.Render(ghost, food);
+    renderer.Render(ghosts);
 
     frame_end = SDL_GetTicks();
 

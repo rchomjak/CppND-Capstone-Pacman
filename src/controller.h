@@ -5,11 +5,11 @@
 
 class Controller {
  public:
-  void HandleInput(bool &running, GhostAbstract &ghost) const;
+  void HandleInput(bool &running, GhostAbstract *ghost) const;
 
  private:
-  void ChangeDirection(GhostAbstract &snake, GhostAbstract::Direction input,
-                    GhostAbstract::Direction opposite) const;
+  void ChangeDirection(GhostAbstract &ghost, GhostAbstract::Direction input,
+                       GhostAbstract::Direction opposite) const;
 };
 
 #endif

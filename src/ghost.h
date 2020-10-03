@@ -41,6 +41,9 @@ class GhostAbstract
         m_pos_x(grid_width / 2),
         m_pos_y(grid_height / 2) {}
 
+
+       virtual ~GhostAbstract() {};
+
 };
 
 
@@ -48,6 +51,9 @@ class ComputerGhost: public GhostAbstract {
     
     //TODO: Add A* search path 
     //TODO: Random generator of position Position should be choosen
+
+    mutable size_t NO_COMPUTER_GHOSTS = 0; 
+
     private:
         //Range for A*, how long a computer ghost sees the pacman 
         float m_range{0.0f};
@@ -56,9 +62,12 @@ class ComputerGhost: public GhostAbstract {
         //When pacman eats a fruit, the ghosts (computers) can be eaten.
         bool m_is_eatable = false;
 
+
     public:
 
-        ComputerGhost(int grid_width, int grid_height):GhostAbstract(grid_width, grid_height) {};
+        ComputerGhost(int grid_width, int grid_height):GhostAbstract(grid_width, grid_height), id(NO_COMPUTER_GHOSTS) {
+            NO_COMPUTER_GHOSTS++;
+        };
 
         float reach_range() const { return ComputerGhost::m_range;};
         int no_steps_direct () { return ComputerGhost::m_no_steps_one_direction;};
@@ -67,7 +76,8 @@ class ComputerGhost: public GhostAbstract {
         void update() override;
         void update_pos();
         void update_body(SDL_Point &previous, SDL_Point &current);
-
+        size_t id;
+        ~ComputerGhost() = default;
 
 };
 
@@ -79,6 +89,9 @@ class PlayableGhost: public GhostAbstract {
 
         void speed(float in_speed) override {m_speed = in_speed;}
         void update() override;
+        void update_pos();
+        void update_body(SDL_Point &previous, SDL_Point &current);
+        ~PlayableGhost() = default;
 };
 
 
