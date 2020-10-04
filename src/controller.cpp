@@ -1,12 +1,11 @@
 #include "controller.h"
-#include <iostream>
 #include "SDL.h"
 #include "ghost.h"
+#include <iostream>
 
-void Controller::ChangeDirection(GhostAbstract *ghost, GhostAbstract::Direction input
-                                ) const {
+void Controller::ChangeDirection(GhostAbstract *ghost,
+                                 GhostAbstract::Direction input) const {
   ghost->direction = input;
-  return;
 }
 
 void Controller::HandleInput(bool &running, GhostAbstract *ghost) const {
@@ -16,25 +15,21 @@ void Controller::HandleInput(bool &running, GhostAbstract *ghost) const {
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
-        case SDLK_UP:
-          ChangeDirection(ghost, GhostAbstract::Direction::kUp
-                          );
-          break;
+      case SDLK_UP:
+        ChangeDirection(ghost, GhostAbstract::Direction::kUp);
+        break;
 
-        case SDLK_DOWN:
-          ChangeDirection(ghost, GhostAbstract::Direction::kDown
-                         );
-          break;
+      case SDLK_DOWN:
+        ChangeDirection(ghost, GhostAbstract::Direction::kDown);
+        break;
 
-        case SDLK_LEFT:
-          ChangeDirection(ghost, GhostAbstract::Direction::kLeft
-                          );
-          break;
+      case SDLK_LEFT:
+        ChangeDirection(ghost, GhostAbstract::Direction::kLeft);
+        break;
 
-        case SDLK_RIGHT:
-          ChangeDirection(ghost, GhostAbstract::Direction::kRight
-                          );
-          break;
+      case SDLK_RIGHT:
+        ChangeDirection(ghost, GhostAbstract::Direction::kRight);
+        break;
       }
     }
   }

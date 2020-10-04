@@ -51,8 +51,8 @@ class ComputerGhost: public GhostAbstract {
     
     //TODO: Add A* search path 
     //TODO: Random generator of position Position should be choosen
-
-    mutable size_t NO_COMPUTER_GHOSTS = 0; 
+    
+    static int number_ghosts; 
 
     private:
         //Range for A*, how long a computer ghost sees the pacman 
@@ -65,9 +65,7 @@ class ComputerGhost: public GhostAbstract {
 
     public:
 
-        ComputerGhost(int grid_width, int grid_height):GhostAbstract(grid_width, grid_height), id(NO_COMPUTER_GHOSTS) {
-            NO_COMPUTER_GHOSTS++;
-        };
+        ComputerGhost(int grid_width, int grid_height);
 
         float reach_range() const { return ComputerGhost::m_range;};
         int no_steps_direct () { return ComputerGhost::m_no_steps_one_direction;};
@@ -80,6 +78,7 @@ class ComputerGhost: public GhostAbstract {
         ~ComputerGhost() = default;
 
 };
+
 
 class PlayableGhost: public GhostAbstract {
 

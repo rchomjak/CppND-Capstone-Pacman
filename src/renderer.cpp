@@ -49,23 +49,6 @@ void Renderer::Render(std::vector<std::unique_ptr<GhostAbstract>> &ghosts) {
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
-  /*
-  // Render food
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  block.x = food.x * block.w;
-  block.y = food.y * block.h;
-  SDL_RenderFillRect(sdl_renderer, &block);
-
-  */
-  // Render snake's body
-  //SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  /*
-  for (SDL_Point const &point : ghost.body) {
-    block.x = point.x * block.w;
-    block.y = point.y * block.h;
-    SDL_RenderFillRect(sdl_renderer, &block);
-  }
-  */
 
 
 for (auto &ghost: ghosts) {
@@ -79,22 +62,7 @@ for (auto &ghost: ghosts) {
   }
 
 }
- /*
 
-  // Render snake's head
-  block.x = static_cast<int>(ghost.m_pos_x) * block.w;
-  block.y = static_cast<int>(ghost.m_pos_y) * block.h;
-  if (ghost.m_playable) {
-    SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
-  } else {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
-  }
-  SDL_RenderFillRect(sdl_renderer, &block);
-*/
-
-
-  // Update Screen
-  
   SDL_RenderPresent(sdl_renderer);
 
   
@@ -127,7 +95,7 @@ void Renderer::RenderComputerGhost(ComputerGhost *ghost) {
   block.w = screen_width / grid_width ;
   block.h = screen_height / grid_height ;
 
-  SDL_SetRenderDrawColor(sdl_renderer, 0xAA, 0xBB, 0xCC, 0xFF);
+  SDL_SetRenderDrawColor(sdl_renderer, 0xAA  * (ghost->id), 0xBB * (ghost->id), 0xCC * (ghost->id), 0xFF);
   block.x = ghost->pos_x() * block.w ;
   block.y = ghost->pos_y() * block.h ; 
   SDL_RenderFillRect(sdl_renderer, &block);

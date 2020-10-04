@@ -4,12 +4,12 @@
 #include "ghost.h"
 
 class Controller {
- public:
+public:
   void HandleInput(bool &running, GhostAbstract *ghost) const;
 
- private:
-  void ChangeDirection(GhostAbstract *ghost, GhostAbstract::Direction input
-                       ) const;
+private:
+  void ChangeDirection(GhostAbstract *ghost,
+                       GhostAbstract::Direction input) const;
 };
 
 #endif
