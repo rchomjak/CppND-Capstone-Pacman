@@ -25,7 +25,7 @@ void ComputerGhost::update_pos() {
 
   switch (direction) {
     case Direction::kUp:
-      m_pos_x -= m_speed;
+      m_pos_y -= m_speed;
       break;
 
     case Direction::kDown:
@@ -93,7 +93,7 @@ void PlayableGhost::update_pos() {
 
   switch (direction) {
     case Direction::kUp:
-      m_pos_x -= m_speed;
+      m_pos_y -= m_speed;
       break;
 
     case Direction::kDown:

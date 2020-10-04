@@ -36,7 +36,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       } 
     }
     
-    //Update();
+    Update();
     renderer.Render(ghosts);
 
     frame_end = SDL_GetTicks();
@@ -78,12 +78,16 @@ void Game::PlaceFood() {
   }
 }
 */
-/*
+
 void Game::Update() {
-  if (!snake.alive) return;
 
-  snake.Update();
-
+  for (auto &ghost : ghosts) {
+    
+    if (ghost->playable()) {
+     //TODO: live
+    }
+  ghost->update();
+  /*
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
 
@@ -98,6 +102,9 @@ void Game::Update() {
 }
 
 */
+  }
+}
+
 
 int Game::GetScore() const { return score; }
 //int Game::GetSize() const { return snake.size; }

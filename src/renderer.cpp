@@ -75,6 +75,7 @@ for (auto &ghost: ghosts) {
 
   } else {
     Renderer::RenderComputerGhost(static_cast<ComputerGhost *>(ghost.get()));
+
   }
 
 }
@@ -111,21 +112,24 @@ void Renderer::RenderPlayableGhost(PlayableGhost *ghost) {
   block.h = screen_height / grid_height;
 
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  block.x = ghost->m_pos_x * block.w;
-  block.y = ghost->m_pos_y * block.h;
+  block.x = ghost->pos_x() * block.w;
+  block.y = ghost->pos_y() * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
 
 }
 
 void Renderer::RenderComputerGhost(ComputerGhost *ghost) {
 
+ std::cout<<ghost->id<<std::endl;
+ std::cout<<ghost<<std::endl;
+
   SDL_Rect block;
   block.w = screen_width / grid_width ;
   block.h = screen_height / grid_height ;
 
   SDL_SetRenderDrawColor(sdl_renderer, 0xAA, 0xBB, 0xCC, 0xFF);
-  block.x = ghost->m_pos_x * block.w + ghost->id + 10;
-  block.y = ghost->m_pos_y * block.h + ghost->id + 10; 
+  block.x = ghost->pos_x() * block.w ;
+  block.y = ghost->pos_y() * block.h ; 
   SDL_RenderFillRect(sdl_renderer, &block);
 ;
 }
